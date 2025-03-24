@@ -1,0 +1,63 @@
+project:
+  name: "EEG Analysis Software Development (2025)"
+  description: "EEG Data Analysis"
+  version: "2.0.0"
+
+dataset:
+  storage:
+    - 样例库1: "D:\\脑机接口专项-样例库-202502"
+
+  inventory:
+    - name: "ERP-1"
+      type: "EEG"
+      file:
+        - data: "data.bdf"
+        - event: "evt.bdf"
+        - BLDA: "trained_BLDA.pkl"
+      storage: "样例库1"
+      subfolder: "ERP_1_样例_429人次"
+
+    - name: "ERP-2"
+      type: "EEG"
+      file:
+        - data: "data.bdf"
+        - event: "evt.bdf"
+        - EEGNet: "trained_EEGNet.pkl"
+      storage: "样例库1"
+      subfolder: "ERP_2_样例_30人次"
+
+    - name: "MI-1"
+      type: "EEG"
+      file:
+        - data: "data.bdf"
+        - event: "evt.bdf"
+      storage: "样例库1"
+      subfolder: "MI_1_样例_377人次"
+
+    - name: "Multi-1"
+      type: "EEG"
+      file:
+        - data: "data.bdf"
+        - event: "evt.bdf"
+        - recordInformation: "recordInformation.json"
+      storage: "样例库1"
+      subfolder: "Multi_1_样例_8人次"
+
+    - name: "SSVEP-1"
+      type: "EEG"
+      file:
+        - data: "data.bdf"
+        - event: "evt.bdf"
+        - recordInformation: "recordInformation.json"
+      storage: "样例库1"
+      subfolder: "SSVEP_1_样例_134人次"
+
+    - name: "有创"
+      type: "InnerEEG"
+      file:
+        - data: "*.data"
+        - event: "EEGRealTime_S*[0-9].txt"
+        - para: "*_Para.txt"
+        - marker: "*Marker*.txt"
+      storage: "样例库1"
+      subfolder: "有创_样例_17人次"
