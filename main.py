@@ -82,27 +82,23 @@ ui.label('Operations')
 ui_analysis_button = ui.button('Overlook')
 
 # %%
-# Analysis layout
+# Analysis page
 
 
-@ui.page('/overlook')
-def routine_analysis():
-    eeg_data = EEGData()
-    eeg_data.init_from_selected_data(sd)
-    print(eeg_data.load_raw())
-    eeg_data.reload_montage(eeg_data.standard_montage_name)
-
-    # ----------------------------------------
-    # ---- Header bar ----
-    with ui.row().classes('w-full'):
+def mk_header():
+    with ui.row().classes('w-full items-center font-bold text-rose-500'):
         ui.button(icon='home', on_click=lambda: ui.navigate.to('/'))
-        ui.label('Working directory:')
-        ui.label(sd.get_folder().as_posix())
+        ui.label(
+            f'{sd.inventory_type}: {sd.inventory_name}').classes('text-xl')
+        ui.label(sd.get_folder().as_posix()).classes('text-xl')
         ui.space()
         with ui.button(icon='menu'):
             with ui.menu() as menu:
                 ui.menu_item('Root', lambda: ui.navigate.to('/'))
-                ui.menu_item('Overlook', lambda: ui.navigate.to('/overlook'))
+                ui.menu_item('Overlook',
+                             lambda: ui.navigate.to('/overlook'))
+                ui.menu_item('Analysis',
+                             lambda: ui.navigate.to('/analysis'))
                 ui.separator()
                 ui.menu_item(
                     'Menu item 2', lambda: ui.notify('Selected item 2'))
@@ -111,12 +107,45 @@ def routine_analysis():
                 ui.separator()
                 ui.menu_item('Close', menu.close)
     ui.separator()
+    return
+
+
+@ui.page('/analysis')
+def routine_analysis():
+    # ----------------------------------------
+    # ---- Header bar ----
+    mk_header()
+
+    # ----------------------------------------
+    # ---- Body ----
+    eeg_data = EEGData()
+    eeg_data.init_from_selected_data(sd)
+    print(eeg_data.load_raw())
+    eeg_data.reload_montage(eeg_data.standard_montage_name)
+
+    return
+
+# %%
+# Overlook page
+
+
+@ui.page('/overlook')
+def routine_overlook():
+    # ----------------------------------------
+    # ---- Header bar ----
+    mk_header()
+
+    # ----------------------------------------
+    # ---- Body ----
+    eeg_data = EEGData()
+    eeg_data.init_from_selected_data(sd)
+    print(eeg_data.load_raw())
+    eeg_data.reload_montage(eeg_data.standard_montage_name)
 
     with ui.row().classes('w-full flex justify-around'):
         # Make the cards layout in flex center
         # ----------------------------------------
         # ---- Sensors plot ----
-
         with ui.card():
             ui.label('Sensors plot')
             ch_names = eeg_data.raw.ch_names
@@ -166,6 +195,8 @@ def routine_analysis():
             column_defaults={'align': 'left',
                              'headerClasses': 'uppercase text-primary'}
         ).classes('w-full')
+
+    return
 
 
 # %% ---- 2025-03-24 ------------------------
